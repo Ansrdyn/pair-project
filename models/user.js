@@ -1,4 +1,5 @@
 'use strict';
+const { hashPassword } = require('../helpers/bycrypt')
 const {
   Model
 } = require('sequelize');
@@ -15,11 +16,29 @@ module.exports = (sequelize, DataTypes) => {
     }
   }
   User.init({
-    userName: DataTypes.STRING,
-    password: DataTypes.STRING,
-    email: DataTypes.STRING,
+
+    userName: {
+      type: DataTypes.STRING,
+      unique: true,
+      allowNull: false
+    },
+    password: {
+      type: DataTypes.STRING,
+      unique: true,
+      allowNull: false
+    },
+    email: {
+      type: DataTypes.STRING,
+      unique: true,
+      allowNull: false
+    },
     role: DataTypes.STRING
   }, {
+    hooks: {
+      beforeCreate: (user, options) => {
+        user.password = hashPassword(user.password)
+      }
+    },
     sequelize,
     modelName: 'User',
   });
