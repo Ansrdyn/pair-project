@@ -11,6 +11,8 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
+      Profile.hasOne(models.User)
+      Profile.hasMany(models.Post)
     }
   }
   Profile.init({
@@ -18,7 +20,7 @@ module.exports = (sequelize, DataTypes) => {
     photoProfile: DataTypes.STRING,
     birthdate: DataTypes.DATE,
     bio: DataTypes.STRING,
-    userId: DataTypes.INTEGER
+    UserId: DataTypes.INTEGER
   }, {
     sequelize,
     modelName: 'Profile',

@@ -1,6 +1,8 @@
 [
     {
-        "tweet": "didalam tubuh saya ada naga",
-        "UserId": 1
+        "name" : "bayu",
+        "content": "didalam tubuh saya ada naga",
+        "like": 0,
+        "ProfileId": 1
     }
 ]
