@@ -5,8 +5,7 @@ const router = express.Router()
 
 // Home Page
 router.get('/', Controller.home)
-
-
+router.get('/profile', Controller.profile)
 
 
 module.exports = router
