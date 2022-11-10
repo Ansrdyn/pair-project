@@ -1,8 +1,32 @@
 [
     {
-        "name" : "bayu",
+        "name" : "Naya",
         "birthdate": "10-11-2022",
         "bio" : "hello",
         "UserId": 1
+    },
+    {
+        "name" : "rere",
+        "birthdate": "10-11-2022",
+        "bio" : "hello",
+        "UserId": 2
+    },
+    {
+        "name" : "mika",
+        "birthdate": "10-11-2022",
+        "bio" : "hello",
+        "UserId": 3
+    },
+    {
+        "name" : "lano",
+        "birthdate": "10-11-2022",
+        "bio" : "hello",
+        "UserId": 4
+    },
+    {
+        "name" : "nisa",
+        "birthdate": "10-11-2022",
+        "bio" : "hello",
+        "UserId": 5
     }
 ]

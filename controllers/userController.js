@@ -14,23 +14,38 @@ class UserController {
 
     static register(req, res) {
         let { name, birthdate, bio, userName, password, email } = req.body
-        User.create({
-            userName,
-            password,
-            email,
+        const findEmail = User.findOne({
+            where: {
+                email
+            }
         })
-            .then((result) => {
-                Profile.create({
-                    name,
-                    birthdate,
-                    bio,
-                    UserId: result.id
-                })
-            }).then((result) => {
-                res.redirect('/')
-            }).catch((err) => {
-                res.send(err)
-            });
+        const username = User.findOne({
+            where: {
+                userName
+            }
+        })
+
+        if (!findEmail || !username) {
+            alert('userName atau email telah terdaftar!!')
+        } else {
+            User.create({
+                userName,
+                password,
+                email,
+            })
+                .then((result) => {
+                    Profile.create({
+                        name,
+                        birthdate,
+                        bio,
+                        UserId: result.id
+                    })
+                }).then((result) => {
+                    res.redirect('/login')
+                }).catch((err) => {
+                    res.send(err)
+                });
+        }
     }
 
     static getUser(req, res) {
@@ -44,27 +59,27 @@ class UserController {
 
     static getProfile(req, res) {
         const userId = req.session.UserId
-        // const id = req.params.id
+        const id = req.params.id
         Profile.findOne({
             include: {
                 model: Post
             },
             where: {
-                UserId: userId
+                id
             }
         })
             .then((data) => {
                 // res.send(data)
                 res.render('profilePost', { data })
             }).catch((err) => {
-                console.log(err);
+                // console.log(err);
                 res.send(err)
             });
     }
 
     static detailPost(req, res) {
         const id = req.params.id
-        console.log(req.params.id);
+        // console.log(req.params.id);
         Post.findOne({
             where: {
                 id
@@ -78,19 +93,20 @@ class UserController {
     }
 
     static addPost(req, res) {
-        const profileId = req.params.profileId
-        Profile.findOne({
-            include: Post,
-            where: {
-                id: profileId
-            }
-        })
-            .then((data) => {
-                // res.send(data)
-                res.render('formAddPost', { data })
-            }).catch((err) => {
+        const UserId = req.session.id
+        console.log(UserId);
+        // Profile.findOne({
+        //     include: Post,
+        //     where: {
+        //         id: profileId
+        //     }
+        // })
+        //     .then((data) => {
+        //         res.send(data)
+        //         // res.render('formAddPost', { data })
+        //     }).catch((err) => {
 
-            });
+        //     });
         // res.render('formAddPost')
     }
 
@@ -111,6 +127,7 @@ class UserController {
     static login(req, res) {
         const { userName, password } = req.body
         User.findOne({
+            include: Profile,
             where: { userName }
         })
             .then((user) => {
@@ -118,10 +135,9 @@ class UserController {
                     const isValidPassword = bcryptjs.compareSync(password, user.password)
                     if (isValidPassword) {
 
-                        req.session.role = user.role
-                        req.session.UserId = user.id
+                        req.session = user
 
-                        return res.redirect('/profile')
+                        return res.redirect('/')
                     } else {
                         const error = 'Invalid username/password'
                         return res.redirect(`/?error=${error}`)
@@ -131,9 +147,19 @@ class UserController {
                     return res.redirect(`/?error=${error}`)
                 }
             }).catch((err) => {
-                console.log(err);
                 res.send(err)
             })
+    }
+
+    static HomePage(req, res) {
+        Post.findAll({
+            include: Profile
+        })
+            .then((result) => {
+                res.render('homePage', { post: result })
+            }).catch((err) => {
+                res.send(err)
+            });
     }
 
 }
