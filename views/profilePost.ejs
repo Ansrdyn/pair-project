@@ -20,16 +20,16 @@
             <th scope="col">Photo Profile</th>
             <th scope="col">birthdate</th>
             <th scope="col">bio</th>
-            <th scope="col">Total Post</th>
           </tr>
         </thead>
         <tbody>
                 <tr>
-                  <th scope="row"><%=data.name%></th>
-                  <td><%=data.photoProfile%></td>
+                  <td><%=data.name%></td>
+                  <td>
+                    <img src="<%=data.photoProfile%>" style="width:10em; height: 10em">
+                  </td>
                   <td><%=data.birthdate.toISOString().split('T')[0]%></td>
                   <td><%=data.bio%></td>
-                  <td><%=data.dataValues.total%></td>
                 </tr<
         </tbody>
       </table>
