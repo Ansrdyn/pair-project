@@ -22,9 +22,6 @@
     <form method="post" action="/profile/<%=data.id%>/addPost">
         <input type="hidden" name="name" value="<%=data.name%>" style="display: none;">
         <input type="hidden" name="like" value="<%=data.like%>" style="display: none;">
-        <%data.Posts.forEach((el)=>{%>
-            <input type="hidden" name="ProfileId" value="<%=el.ProfileId%>" style="display: none;">
-       <% })%> 
         <textarea id="mytextarea" name="content" style="width: 500px; height: 50px;"></textarea>
         <button type="submit" class="btn btn-secondary">Send it</button>
     </form>
@@ -32,4 +29,4 @@
 
 </body>
 
-</html>
+</html>           

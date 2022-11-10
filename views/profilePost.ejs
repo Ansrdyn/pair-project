@@ -12,50 +12,35 @@
 
 <body>
 
-
   <a href="/detailPost/<%=data.id%>"><button>More detail</button></a>
 
 
   <table class="table">
-    <thead>
-      <tr>
-        <th scope="col">name</th>
-        <th scope="col">Photo Profile</th>
-        <th scope="col">birthdate</th>
-        <th scope="col">bio</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td>
-          <%=data.name%>
-        </td>
-        <td>
-          <img src="<%=data.photoProfile%>" style="width:10em; height: 10em">
-        </td>
-        <td>
-          <%=data.birthdate.toISOString().split('T')[0]%>
-        </td>
-        <td>
-          <%=data.bio%>
-        </td>
-        </tr< </tbody>
-  </table>
-
-  <table border="1px">
     <tr>
-      <th>Name</th>
-      <th>Content</th>
-      <th>Post Date</th>
+      <th scope="col">name</th>
+      <th scope="col">Photo Profile</th>
+      <th scope="col">birthdate</th>
+      <th scope="col">bio</th>
+      <th scope="col">Total Post</th>
     </tr>
-    <% data.Posts.forEach(el => { %>
     <tr>
-      <td><%= data.name %></td>
-        <td><%= el.content%></td>
-        <td><%= el.createdAt.toISOString().split('T')[0] %></td>
+      <td scope="row">
+        <%=data.name%>
+      </td>
+      <td>
+        <%=data.photoProfile%>
+      </td>
+      <td>
+        <%=data.getDate()%>
+      </td>
+      <td>
+        <%=data.bio%>
+      </td>
+      <td>
+        <%=data.dataValues.total%>
+      </td>
       </tr>
-      <% }) %> 
-  </table>
+     </table>
 </body>
 
 </html>
