@@ -10,6 +10,7 @@ const router = express.Router()
 router.get('/', UserController.renderLogin)
 router.post('/', UserController.login)
 
+
 // Register
 router.get('/register', UserController.renderRegister)
 router.post('/register', UserController.register)
