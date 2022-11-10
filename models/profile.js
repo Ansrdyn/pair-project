@@ -22,6 +22,11 @@ module.exports = (sequelize, DataTypes) => {
     bio: DataTypes.STRING,
     userId: DataTypes.INTEGER
   }, {
+    hooks: {
+      beforeCreate: (profile, options) => {
+        profile.photoProfile = `https://avatars.dicebear.com/api/adventurer/${profile.name}.svg`
+      },
+    },
     sequelize,
     modelName: 'Profile',
   });
