@@ -39,7 +39,6 @@ router.get('/user', UserController.getUser)
 
 
 // read post
-
 router.get('/profile/:id', UserController.getProfile)
 router.get('/detailPost/:id', UserController.detailPost)
 
@@ -47,21 +46,15 @@ router.get('/detailPost/:id', UserController.detailPost)
 
 // add post(post)
 router.post('/profile/:profileId/addPost', UserController.getAddPost)
-
 // edit profil
+
 router.get('/editProfile/:profileId', UserController.editProfile)
 
 // post edit profile
 router.post('/editProfile/:profileId', UserController.postEditProfile)
 
 // deleteId
-router.get('profile/:profileId/delete/:postId', UserController.deletePost)
+router.get('/profile/:id/delete/:postId', UserController.deletePost)
 
-
-router.use((req, res, next) => {
-    console.log(req.session);
-    console.log('Time:', Date.now())
-    next()
-})
 
 module.exports = router

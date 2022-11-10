@@ -19,7 +19,7 @@ module.exports = (sequelize, DataTypes) => {
     name: DataTypes.STRING,
     content: DataTypes.STRING,
     like: {
-      type: DataTypes.INTEGER,
+      type : DataTypes.INTEGER,
       defaultValue: 0
     },
     ProfileId: DataTypes.INTEGER
