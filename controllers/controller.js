@@ -1,5 +1,6 @@
 class Controller {
-    static home(req,res){
+    
+    static home(req, res) {
         res.render('home')
     }
     
