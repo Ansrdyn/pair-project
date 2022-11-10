@@ -6,6 +6,7 @@ module.exports = {
     let data = JSON.parse(fs.readFileSync('./data/profile.json', 'utf-8')).map((el)=>{
       el.createdAt = new Date()
       el.updatedAt = new Date()
+      el.photoProfile = `https://avatars.dicebear.com/api/adventurer/${el.name}.svg`
       return el
     })
     return queryInterface.bulkInsert('Profiles', data, {});

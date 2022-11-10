@@ -12,5 +12,26 @@
         "password": "hambaAllah",
         "email": "rere@gmail.com",
         "role": "user"
+    },
+    {
+        "id": 3,
+        "userName": "mika12",
+        "password": "hambaAllah1",
+        "email": "rere@gmail.com",
+        "role": "user"
+    },
+    {
+        "id": 4,
+        "userName": "lano23",
+        "password": "hambaAllah2",
+        "email": "rere@gmail.com",
+        "role": "user"
+    },
+    {
+        "id": 5,
+        "userName": "nisa34",
+        "password": "hambaAllah3",
+        "email": "rere@gmail.com",
+        "role": "user"
     }
 ]

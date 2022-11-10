@@ -1,8 +1,26 @@
 [
     {
-        "name" : "bayu",
+        "name" : "Naya",
         "content": "didalam tubuh saya ada naga",
         "like": 0,
         "ProfileId": 1
+    },
+    {
+        "name" : "Naya",
+        "content" : "jangan pulang telat",
+        "like" : 0,
+        "ProfileId" : 1
+    },
+    {
+        "name" : "kiki",
+        "content" : "mamam kau",
+        "like" : 0,
+        "ProfileId" : 2
+    },
+    {
+        "name" : "surya",
+        "content" : "uangmu uangku, uangku uangku",
+        "like" : 0,
+        "ProfileId" : 3
     }
 ]
