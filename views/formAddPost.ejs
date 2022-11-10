@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
+    <script src="https://cdn.tiny.cloud/1/kfdemzx6zm3ds18xw5eaeh4pi1vnjsx05myn11zcb5hbkn26/tinymce/6/tinymce.min.js"
+        referrerpolicy="origin"></script>
+    <script>
+        tinymce.init({
+            selector: '#mytextarea'
+        });
+    </script>
+    <title>Document</title>
+</head>
+
+<body>
+    <h1>Something new??</h1>
+    <form method="post" action="/profile/<%=data.id%>/addPost">
+        <input type="hidden" name="name" value="<%=data.name%>" style="display: none;">
+        <input type="hidden" name="like" value="<%=data.like%>" style="display: none;">
+        <%data.Posts.forEach((el)=>{%>
+            <input type="hidden" name="ProfileId" value="<%=el.ProfileId%>" style="display: none;">
+       <% })%> 
+        <textarea id="mytextarea" name="content" style="width: 500px; height: 50px;"></textarea>
+        <button type="submit" class="btn btn-secondary">Send it</button>
+    </form>
+    <br>
+
+</body>
+
+</html>

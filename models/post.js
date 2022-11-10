@@ -12,7 +12,7 @@ module.exports = (sequelize, DataTypes) => {
     static associate(models) {
       // define association here
 
-      Post.belongsTo(models.Profile, { foreignKey: "profileId" });
+      Post.belongsTo(models.Profile, { foreignKey: "ProfileId" });
     }
   }
   Post.init({
