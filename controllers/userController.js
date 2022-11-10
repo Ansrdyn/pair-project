@@ -1,8 +1,8 @@
 const { User, Post, Profile, sequelize } = require('../models')
 const bcryptjs = require('bcryptjs');
+const { where } = require('sequelize');
 
 class UserController {
-
     static renderRegister(req, res) {
         res.render('register')
     }
@@ -60,6 +60,7 @@ class UserController {
     static getProfile(req, res) {
         const userId = req.session.UserId
         const id = req.params.id
+        console.log(req.session);
         Profile.findOne({
             include: {
                 model: Post
@@ -86,6 +87,7 @@ class UserController {
             }
         })
             .then((data) => {
+                // res.send(data)
                 res.render('showPost', { data })
             }).catch((err) => {
                 res.err(err)
@@ -116,11 +118,9 @@ class UserController {
         const like = parseInt(req.body.like)
         Post.create({ name, content, ProfileId, like })
             .then(() => {
-                // console.log(req.body)
-                res.redirect(`/profile/${ProfileId}`)
+                res.redirect(`/profile/${profileId}`)
             }).catch((err) => {
-                console.log(err);
-                res.send(err)
+                res.send(err) 
             });
     }
 

@@ -8,23 +8,27 @@
     <title>Document</title>
 </head>
 <body>
-    <a href="/profile/<%=data.id%>/addPost"><button>Add new Post</button></a>
+    <a href="/profile/<%=data.UserId%>/addPost"><button>Add new Post</button></a>
 
+    <h2><%=data.name%></h2>
     <table class="table">
         <thead>
           <tr>
-            <th scope="col">Name</th>
             <th scope="col">Content</th>
-            <th scope="col">like</th>
+            <th scope="col">Action</th>
           </tr>
         </thead>
         <tbody>
-                <tr>
-                  <th scope="row"><%=data.name%></th>
-                  <td><%=data.content%></td>
-                  <td><button><%=data.like%></button></td>
-                </tr>
-        </tbody>
+                    <%data.Posts.forEach((el)=>{%>
+                  <td style="display:flex;flex-wrap: wrap;width: 200px;">
+                         <%=el.content%>
+                        </td>
+                        <td>
+                            <a href="/profile/<%=data.id%>/delete/<%=el.id%>"><button>delete</button></a>
+                        </td>
+                    </tr>
+                  </tbody>
+                <%})%>
       </table>
 </body>
 </html>

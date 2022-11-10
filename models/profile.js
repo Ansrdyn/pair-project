@@ -15,6 +15,9 @@ module.exports = (sequelize, DataTypes) => {
       Profile.hasMany(models.Post)
       Profile.belongsTo(models.User, { foreignKey: 'UserId' })
     }
+    getDate(){
+      return new Date (this.birthdate).toISOString().split('T')[0]
+    }
   }
   Profile.init({
     name: DataTypes.STRING,

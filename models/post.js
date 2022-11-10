@@ -18,7 +18,10 @@ module.exports = (sequelize, DataTypes) => {
   Post.init({
     name: DataTypes.STRING,
     content: DataTypes.STRING,
-    like: DataTypes.INTEGER,
+    like: {
+      type: DataTypes.INTEGER,
+      defaultValue: 0
+    },
     ProfileId: DataTypes.INTEGER
   }, {
     sequelize,
