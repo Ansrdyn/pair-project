@@ -1,0 +1,16 @@
+[
+    {
+        "id": 1,
+        "userName": "Naya99",
+        "password": "hsikbkbis",
+        "email": "nayaimoet@gmail.com",
+        "role": "admin"
+    },
+    {
+        "id": 2,
+        "userName": "rere3",
+        "password": "hambaAllah",
+        "email": "rere@gmail.com",
+        "role": "user"
+    }
+]
