@@ -14,38 +14,23 @@ class UserController {
 
     static register(req, res) {
         let { name, birthdate, bio, userName, password, email } = req.body
-        const findEmail = User.findOne({
-            where: {
-                email
-            }
+        User.create({
+            userName,
+            password,
+            email,
         })
-        const username = User.findOne({
-            where: {
-                userName
-            }
-        })
-
-        if (!findEmail || !username) {
-            alert('userName atau email telah terdaftar!!')
-        } else {
-            User.create({
-                userName,
-                password,
-                email,
-            })
-                .then((result) => {
-                    Profile.create({
-                        name,
-                        birthdate,
-                        bio,
-                        UserId: result.id
-                    })
-                }).then((result) => {
-                    res.redirect('/login')
-                }).catch((err) => {
-                    res.send(err)
-                });
-        }
+            .then((result) => {
+                Profile.create({
+                    name,
+                    birthdate,
+                    bio,
+                    UserId: result.id
+                })
+            }).then((result) => {
+                res.redirect('/')
+            }).catch((err) => {
+                res.send(err)
+            });
     }
 
     static getUser(req, res) {
@@ -58,32 +43,33 @@ class UserController {
     }
 
     static getProfile(req, res) {
-        const userId = req.session.UserId
         const id = req.params.id
         console.log(req.session);
+        const userId = req.session.UserId
+        // const id = req.params.id
         Profile.findOne({
             include: {
                 model: Post
             },
             where: {
-                id
+                UserId: id
             }
         })
             .then((data) => {
                 // res.send(data)
                 res.render('profilePost', { data })
             }).catch((err) => {
-                // console.log(err);
+                console.log(err);
                 res.send(err)
             });
     }
 
     static detailPost(req, res) {
         const id = req.params.id
-        // console.log(req.params.id);
-        Post.findOne({
+        Profile.findOne({
+            include: Post,
             where: {
-                id
+                UserId: id
             }
         })
             .then((data) => {
@@ -93,51 +79,128 @@ class UserController {
                 res.err(err)
             });
     }
-
+    
     static addPost(req, res) {
-        const UserId = req.session.id
-        console.log(UserId);
-        // Profile.findOne({
-        //     include: Post,
-        //     where: {
-        //         id: profileId
-        //     }
-        // })
-        //     .then((data) => {
-        //         res.send(data)
-        //         // res.render('formAddPost', { data })
-        //     }).catch((err) => {
-
-        //     });
-        // res.render('formAddPost')
+        const profileId = req.params.profileId
+        const errors = req.query.errors
+        Profile.findOne({
+            include: Post,
+            where: {
+                id: profileId
+            }
+        })
+            .then((data) => {
+                res.render('formAddPost', { data, errors })
+            }).catch((err) => {
+                res.send(err)
+            });
     }
 
     static getAddPost(req, res) {
+        // const id = req.params.id
+        const profileId = req.params.profileId
         const { name, content } = req.body
-        const ProfileId = parseInt(req.body.ProfileId)
-        const like = parseInt(req.body.like)
-        Post.create({ name, content, ProfileId, like })
+        Post.create({ name, content, ProfileId: profileId })
             .then(() => {
                 res.redirect(`/profile/${profileId}`)
             }).catch((err) => {
-                res.send(err) 
+                // if (err.name == `SequelizeValidationError`) {
+                let errors = err.errors.map(el => el.message)
+                if (errors) {
+                    res.redirect(`/profile/${profileId}/addPost?errors=${errors}`)
+                } else {
+                    res.send(err)
+                }
             });
+    }
+
+    static editProfile(req, res) {
+        const errors = req.query.errors
+        const profileId = req.params.profileId
+        Profile.findOne({
+            include: Post,
+            where: {
+                id: profileId
+            }
+        })
+            .then((data) => {
+                // res.send(data)
+                res.render('formEditProfil', { data, errors })
+            }).catch((err) => {
+                res.send(err)
+            });
+        // res.render('formAddPost')
+    }
+
+    static postEditProfile(req, res) {
+        const profileId = req.params.profileId
+        const { name, photoProfile, birtdate, bio, UserId } = req.body
+        // const like = parseInt(req.body.like)
+        Profile.update({ name, photoProfile, birtdate, bio, UserId }, {
+            where: {
+                id: profileId
+            }
+        })
+            .then(() => {
+                res.redirect(`/profile/${profileId}`)
+            }).catch((err) => {
+                if (err.name == `SequelizeValidationError`) {
+                    let errors = err.errors.map(el => el.message)
+                    res.redirect(`/editProfile/${profileId}?errors=${errors}`)
+                } else {
+                    res.send(err)
+                }
+            });
+    }
+    static deletePost(req, res) {
+        const { id, postId } = req.params
+        Post.destroy({
+            where: {
+                id: postId
+            }
+        })
+            .then(() => {
+                console.log('haloo')
+                res.redirect(`/detailPost/${id}`)
+            })
+            .catch((err) => {
+                res.send(err)
+            })
+    }
+
+    static like(req, respond) {
+        const id = req.params.id
+        Post.findOne({
+            where: {
+                id
+            }
+        }).then((data) => {
+            Post.update({
+                like: data.like + 1
+            }, {
+                where: {
+                    id
+                }
+            })
+            // console.log(data);
+        })
+            .then(() => res.redirect(`/profile/${id}`))
+            .catch(err => res.send(err))
     }
 
     static login(req, res) {
         const { userName, password } = req.body
         User.findOne({
-            include: Profile,
             where: { userName }
         })
             .then((user) => {
                 if (user) {
                     const isValidPassword = bcryptjs.compareSync(password, user.password)
                     if (isValidPassword) {
+                        req.session.role = user.role
+                        req.session.UserId = user.id
 
-                        req.session = user
-
-                        return res.redirect('/')
+                        return res.redirect('/profile')
                     } else {
                         const error = 'Invalid username/password'
                         return res.redirect(`/?error=${error}`)
@@ -147,19 +210,9 @@ class UserController {
                     return res.redirect(`/?error=${error}`)
                 }
             }).catch((err) => {
+                console.log(err);
                 res.send(err)
             })
-    }
-
-    static HomePage(req, res) {
-        Post.findAll({
-            include: Profile
-        })
-            .then((result) => {
-                res.render('homePage', { post: result })
-            }).catch((err) => {
-                res.send(err)
-            });
     }
 
 }

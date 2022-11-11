@@ -21,7 +21,7 @@
             <td><%= el.content %></td>
             <td><%= el.createdAt.toISOString().split('T')[0] %></td>
             <td>
-                <button>Like</button>
+                <button href="/like/<%= el.id %>">Like</button>
                 <a href="#"><button>Delete</button></a>
             </td>
         </tr>
