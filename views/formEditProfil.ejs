@@ -7,6 +7,13 @@
     <title>Document</title>
 </head>
 <body>
+    <%if(errors){ %>
+        <% errors.split(',').forEach(el=>{%>
+            <div style="color:red ;">
+                <%=el%>
+            </div>
+            <%})%>
+                <% }%>
     <form action="/editProfile/<%=data.id%>" method="post">
         <label>Name:</label><br>
         <input type="text" name="name" value=<%=data.name%>><br>

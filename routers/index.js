@@ -28,9 +28,8 @@ router.use((req, res, next) => {
     // }
 })
 
-router.get('/', UserController.HomePage)
+// router.get('/', UserController.HomePage)
 
-router.get('/addPost', UserController.addPost)
 
 // table user
 router.get('/user', UserController.getUser)
@@ -44,6 +43,7 @@ router.get('/detailPost/:id', UserController.detailPost)
 
 // add post(get)
 
+router.get('/profile/:profileId/addPost', UserController.addPost)
 // add post(post)
 router.post('/profile/:profileId/addPost', UserController.getAddPost)
 // edit profil
@@ -55,6 +55,10 @@ router.post('/editProfile/:profileId', UserController.postEditProfile)
 
 // deleteId
 router.get('/profile/:id/delete/:postId', UserController.deletePost)
+
+// like
+router.get('/like/:id', UserController.like)
+
 
 
 module.exports = router

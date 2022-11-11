@@ -20,10 +20,54 @@ module.exports = (sequelize, DataTypes) => {
     }
   }
   Profile.init({
-    name: DataTypes.STRING,
-    photoProfile: DataTypes.STRING,
-    birthdate: DataTypes.DATE,
-    bio: DataTypes.STRING,
+    name: {
+      type: DataTypes.STRING,
+      allowNull:false,
+      validate:{
+        notNull :{
+          msg: `name cant not be null`
+        },
+        notEmpty:{
+          msg: `name cant not be empty`
+        }
+      }
+    },
+    photoProfile: {
+      type: DataTypes.STRING,
+      allowNull: false,
+      validate: {
+        notNull: {
+          msg: `photoprofile cant not be null`
+        },
+        notEmpty: {
+          msg: `photop cant not be empty`
+        }
+      }
+    },
+    birthdate: {
+      type: DataTypes.DATE,
+      allowNull: false,
+      validate: {
+        notNull: {
+          msg: `birthdate cant not be null`
+        },
+        notEmpty: {
+          msg: `birthdate cant not be empty`
+        }
+      }
+    },
+    bio: {
+      type: DataTypes.STRING,
+      allowNull: false,
+      validate: {
+        notNull: {
+          msg: `bio cant not be null`
+        },
+        notEmpty: {
+          msg: `bio cant not be empty`
+        }
+      }
+    },
     UserId: DataTypes.INTEGER
   }, {
     hooks: {

@@ -19,14 +19,21 @@
 
 <body>
     <h1>Something new??</h1>
-    <form method="post" action="/profile/<%=data.id%>/addPost">
-        <input type="hidden" name="name" value="<%=data.name%>" style="display: none;">
-        <input type="hidden" name="like" value="<%=data.like%>" style="display: none;">
-        <textarea id="mytextarea" name="content" style="width: 500px; height: 50px;"></textarea>
-        <button type="submit" class="btn btn-secondary">Send it</button>
-    </form>
-    <br>
+    <%if(errors){ %>
+        <% errors.split(',').forEach(el=>{%>
+            <div style="color:red ;">
+                <%=el%>
+            </div>
+            <%})%>
+                <% }%>
+                    <form method="post" action="/profile/<%=data.id%>/addPost">
+                        <input type="hidden" name="name" value="<%=data.name%>" style="display: none;">
+                        <input type="hidden" name="like" value="<%=data.like%>" style="display: none;">
+                        <textarea id="mytextarea" name="content" style="width: 500px; height: 50px;"></textarea>
+                        <button type="submit" class="btn btn-secondary">Send it</button>
+                    </form>
+                    <br>
 
 </body>
 
-</html>           
+</html>
